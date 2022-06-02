@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="TestDynamicProps.MainWindow"
+        Title="TestDynamicProps"
+		Width="400"
+		Height="300">
+	<Grid x:Name="RootPanel" 
+		  Margin="10"
+		  RowDefinitions="*, Auto">
+		<StackPanel>
+			<TextBlock Text="{Binding Path=MyObj}"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   Margin="5"/>
+			<TextBlock Text="{Binding Path=MyObj2}"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   Margin="5"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal"
+					Grid.Row="1"
+					HorizontalAlignment="Right">
+			<Button Content="ToggleText"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Center"
+					Command="{Binding $parent[Window].ToggleText}"
+					Padding="10,5"
+					Margin="5"/>
+
+			<Button Content="ToggleText2"
+					Grid.Row="1"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Center"
+					Command="{Binding $parent[Window].ToggleText2}"
+					Padding="10,5"
+					Margin="5"/>
+		</StackPanel>
+	</Grid>
+</Window>
