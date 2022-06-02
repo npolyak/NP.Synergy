@@ -1,2 +1,2 @@
-# NP.IoCySadeh
-field for planting objects
+# NP.Synergy
+Allows planting objects that interact with each other
