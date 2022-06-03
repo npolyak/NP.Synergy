@@ -7,7 +7,7 @@ namespace TestDynamicProps
 {
     public partial class MainWindow : Window
     {
-        private Composer _composer = new Composer();
+        private Container _composer = new Container();
 
         const string Cell1Name = "MyObj";
         const string Cell2Name = "MyObj2";

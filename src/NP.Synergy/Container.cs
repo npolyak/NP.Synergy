@@ -3,7 +3,7 @@ using NP.Utilities;
 
 namespace NP.Synergy
 {
-    public class Composer
+    public class Container
     {
         private HashSet<string> _stringKeys = new HashSet<string>();
         private Dictionary<object, Cell> _props = new Dictionary<object, Cell>();
