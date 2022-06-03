@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using NP.Synergy;
 using System.Collections.Generic;
 using System.Dynamic;
 
@@ -6,7 +7,7 @@ namespace TestDynamicProps
 {
     public partial class MainWindow : Window
     {
-        private Sadeh _sadeh = new Sadeh();
+        private Composer _composer = new Composer();
 
         const string Cell1Name = "MyObj";
         const string Cell2Name = "MyObj2";
@@ -22,27 +23,27 @@ namespace TestDynamicProps
 
         public MainWindow()
         {
-            _sadeh.SetCell(Cell1Name, typeof(string), true);
+            _composer.SetCell(Cell1Name, typeof(string), true);
 
-            _sadeh.SetCell(Cell2Name, typeof(string), true);
+            _composer.SetCell(Cell2Name, typeof(string), true);
 
             ToggleText();
             ToggleText2();
 
             InitializeComponent();
 
-            RootPanel.DataContext = _sadeh;
+            RootPanel.DataContext = _composer;
         }
 
         private void ToggleTextImpl(string cellName, string text1, string text2)
         {
-            if (_sadeh[cellName] == text1)
+            if (_composer[cellName] == text1)
             {
-                _sadeh[cellName] = text2;
+                _composer[cellName] = text2;
             }
             else
             {
-                _sadeh[cellName] = text1;
+                _composer[cellName] = text1;
             }
         }
 

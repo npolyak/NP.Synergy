@@ -1,11 +1,9 @@
-﻿using NP.Utilities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Avalonia.Data;
+using NP.Utilities;
 
-namespace TestDynamicProps
+namespace NP.Synergy
 {
-    public class Sadeh
+    public class Composer
     {
         private HashSet<string> _stringKeys = new HashSet<string>();
         private Dictionary<object, Cell> _props = new Dictionary<object, Cell>();
@@ -36,7 +34,7 @@ namespace TestDynamicProps
                     return;
                 }
 
-                cell!.SetValue(value, Avalonia.Data.BindingPriority.LocalValue);
+                cell!.SetValue(value, BindingPriority.LocalValue);
                 return;
             }
             // cell does not exist

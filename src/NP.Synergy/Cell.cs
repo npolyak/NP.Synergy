@@ -1,7 +1,7 @@
 ﻿using Avalonia.Data;
 using System;
 
-namespace TestDynamicProps
+namespace NP.Synergy
 {
     public class Cell 
     {

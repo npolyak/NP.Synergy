@@ -6,3 +6,9 @@
 	path = SubModules/NP.Concepts.Behaviors
 	url = https://github.com/npolyak/NP.Concepts.Behaviors.git
 	branch = main
+[submodule "SubModules/NP.Avalonia.Visuals"]
+	path = SubModules/NP.Avalonia.Visuals
+	url = https://github.com/npolyak/NP.Avalonia.Visuals.git
+[submodule "SubModules/NP.ViewModelInterfaces"]
+	path = SubModules/NP.ViewModelInterfaces
+	url = https://github.com/npolyak/NP.ViewModelInterfaces.git

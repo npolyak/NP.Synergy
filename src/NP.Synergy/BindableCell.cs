@@ -1,7 +1,7 @@
 ﻿using Avalonia.Data.Core.Plugins;
 using System;
 
-namespace TestDynamicProps
+namespace NP.Synergy
 {
     internal class BindableCell : Cell, IPropertyAccessor
     {

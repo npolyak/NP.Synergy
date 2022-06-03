@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using NP.Synergy;
 using System;
 
 namespace TestDynamicProps
@@ -19,6 +20,6 @@ namespace TestDynamicProps
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .LogToTrace()
-                .InsertSadehPropertyAccessorPluginHelper();
+                .InsertSynergyPropertyAccessorPluginHelper();
     }
 }
