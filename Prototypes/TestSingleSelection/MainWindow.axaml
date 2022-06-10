@@ -1,0 +1,33 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:np="https://np.com/visuals"
+		xmlns:local="clr-namespace:TestSingleSelection"
+        x:Class="TestSingleSelection.MainWindow"
+        Title="TestSingleSelection"
+		Width="400"
+		Height="300">
+	<Grid x:Name="RootPanel" 
+		  Margin="10"
+		  ColumnDefinitions="*,Auto">
+		<ItemsPresenter Items="{Binding Path=SelectablePeopleCollection}">
+			<ItemsPresenter.ItemTemplate>
+				<DataTemplate>
+					<Grid Background="Transparent"
+						  np:CallAction.TheEvent="{x:Static InputElement.PointerPressedEvent}"
+						  np:CallAction.MethodName="Select">
+						<Grid Background="AliceBlue"
+							  IsVisible="{Binding Path=IsSelected, Mode=OneWay}"/>
+						<StackPanel Orientation="Horizontal"
+									Margin="0,5,0,5">
+							<TextBlock Text="{Binding FirstName}"
+									   Margin="0,0,6,0"
+									   VerticalAlignment="Center"/>
+							<TextBlock Text="{Binding LastName}"
+									   VerticalAlignment="Center"/>
+						</StackPanel>
+					</Grid>
+				</DataTemplate>
+			</ItemsPresenter.ItemTemplate>
+		</ItemsPresenter>
+	</Grid>
+</Window>

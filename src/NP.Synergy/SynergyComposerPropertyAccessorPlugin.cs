@@ -8,7 +8,7 @@ namespace NP.Synergy
     {
         public bool Match(object obj, string propertyName)
         {
-            return obj is Container sadeh && sadeh.GetCell(propertyName) is Cell cell && cell.IsBindable;
+            return obj is Container container && container.GetCell(propertyName) is Cell cell && cell.IsBindable;
         }
 
         public IPropertyAccessor? Start(WeakReference<object?> reference, string propertyName)
@@ -17,7 +17,7 @@ namespace NP.Synergy
 
             Container sadeh = (Container)target!;
 
-            return sadeh.GetCell(propertyName) as BindableCell;
+            return sadeh.GetCellByKeyStr(propertyName) as BindableCell;
         }
     }
 
