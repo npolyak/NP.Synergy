@@ -1,6 +1,8 @@
 using Avalonia.Controls;
 using NP.Concepts.Behaviors;
 using NP.Synergy;
+using NP.Utilities;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace TestSingleSelection
@@ -13,20 +15,31 @@ namespace TestSingleSelection
         {
             InitializeComponent();
 
-            _container.SetCell(ObjectIds.SelectablePeopleCollection, typeof(ObservableCollection<SelectablePerson>), true);
+            _container.SetCell
+            (
+                ObjectIds.SelectablePeopleCollection, 
+                typeof(ObservableCollection<SelectablePerson>), 
+                DataPointDirection.Source, 
+                true);
+
             _container[ObjectIds.SelectablePeopleCollection] = new SelectablePeopleTestCollection();
-            _container.SetCell(ObjectIds.SelectedPerson, typeof(SelectablePerson), true);
+            _container.SetCell
+            (
+                ObjectIds.SelectedPerson, 
+                typeof(SelectablePerson), 
+                DataPointDirection.SourceAndTarget, 
+                true);
+
             _container
                 .AddBehavior
                 (
                     new SingleSelectionBehavior<SelectablePerson>(),
-                    new (string, object)[]
+                    new Dictionary<string, object>
                     {
-                        ( nameof(SingleSelectionBehavior<SelectablePerson>.TheCollection), ObjectIds.SelectablePeopleCollection),
-                        ( nameof(SingleSelectionBehavior<SelectablePerson>.TheSelectedItem), ObjectIds.SelectedPerson)
+                        { nameof(SingleSelectionBehavior<SelectablePerson>.TheCollection), ObjectIds.SelectablePeopleCollection },
+                        { nameof(SingleSelectionBehavior<SelectablePerson>.TheSelectedItem), ObjectIds.SelectedPerson }
                     }
                 );
-
 
             RootPanel.DataContext = _container;
         }

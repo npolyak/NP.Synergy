@@ -1,15 +1,16 @@
 ﻿using Avalonia.Data.Core.Plugins;
-using System;
+using NP.Utilities;
 
 namespace NP.Synergy
 {
-    internal class BindableCell : Cell, IPropertyAccessor
+    internal class AvaloniaBindableCell : Cell, IPropertyAccessor
     {
         public override bool IsBindable => true;
 
         private Action<object?>? _listener;
 
-        public BindableCell(object key, Type? propertyType) : base(key, propertyType)
+        public AvaloniaBindableCell(object key, Type? propertyType, DataPointDirection direction) 
+            : base(key, propertyType, direction)
         {
         }
 

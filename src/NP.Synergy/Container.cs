@@ -1,5 +1,7 @@
 ﻿using Avalonia.Data;
 using NP.Utilities;
+using NP.Utilities.Attributes;
+using System.Reflection;
 
 namespace NP.Synergy
 {
@@ -8,6 +10,8 @@ namespace NP.Synergy
         private Dictionary<object, Cell> _props = new Dictionary<object, Cell>();
 
         private Dictionary<string, Cell> _bindableProps = new Dictionary<string, Cell>();
+
+        private List<SynergyBehavior> _behaviors = new List<SynergyBehavior>();
 
         private void CellExistsError(string key) 
         {
@@ -29,8 +33,7 @@ namespace NP.Synergy
 
         private void SetValue(object key, object? value)
         {
-            string keyStr = key.ToStr();
-            if (_props.TryGetValue(keyStr, out Cell? cell))
+            if (_props.TryGetValue(key, out Cell? cell))
             {
                 if (value.ObjEquals(cell?.Value))
                 {
@@ -41,14 +44,14 @@ namespace NP.Synergy
                 return;
             }
             // cell does not exist
-            CellExistsError(keyStr);
+            CellExistsError(key.Sq());
         }
 
         internal Cell GetCell(object key)
         {
             if (!_props.ContainsKey(key))
             {
-                throw new InvalidOperationException($"Programming Error: cannot get a cell for a key '{key}' since such cell does not exist.");
+                throw new InvalidOperationException($"Programming Error: cannot get a cell for a key {key} since such cell does not exist.");
             }
 
             return _props[key];
@@ -78,17 +81,17 @@ namespace NP.Synergy
             }
         }
 
-        protected virtual Cell CreateCell(object key, Type cellType, bool isBindable)
+        internal Cell CreateCell(object key, Type cellType, DataPointDirection direction, bool isBindable)
         {
             if (!isBindable)
             {
-                return new Cell(key, cellType);
+                return new Cell(key, cellType, direction);
             }
             
-            return new BindableCell(key, cellType);
+            return new AvaloniaBindableCell(key, cellType, direction);
         }
 
-        public void SetCell(object key, Type cellType, bool isBindable)
+        public void SetCell(object key, Type cellType, DataPointDirection direction, bool isBindable)
         {
             string keyStr = key.ToStr();
             if (_props.ContainsKey(key) || _bindableProps.ContainsKey(keyStr))
@@ -96,9 +99,14 @@ namespace NP.Synergy
                 CellExistsError(keyStr);
             }
 
-            Cell cell = CreateCell(key, cellType, isBindable);
+            Cell cell = CreateCell(key, cellType, direction, isBindable);
 
             _props[key] = cell;
+
+            if (isBindable)
+            {
+                _bindableProps[keyStr] = cell;
+            }
 
         }
 
@@ -106,6 +114,22 @@ namespace NP.Synergy
         {
             string keyStr = key.ToStr();
             return _props.ContainsKey(keyStr);
+        }
+
+        public void AddBehavior(object behavior, IEnumerable<KeyValuePair<string, object>> propMap)
+        {
+            SynergyBehavior synergyBehavior = 
+                new SynergyBehavior(behavior);
+
+            foreach((string propName, object cellKey) in propMap)
+            {
+                Cell cell = GetCell(cellKey);
+                cell.ThrowIfNull($"cell for cell key '{cellKey}' is not found");
+
+                cell.AddBehavior(synergyBehavior, propName);
+            }
+
+            this._behaviors.Add(synergyBehavior);
         }
     }
 }

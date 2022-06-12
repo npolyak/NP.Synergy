@@ -4,11 +4,11 @@ using Avalonia.Data.Core.Plugins;
 
 namespace NP.Synergy
 {
-    public class SynergyComposerPropertyAccessorPlugin : IPropertyAccessorPlugin
+    public class SynergyAvaloniaContainerPropertyAccessorPlugin : IPropertyAccessorPlugin
     {
-        public bool Match(object obj, string propertyName)
+        public bool Match(object obj, string keyStr)
         {
-            return obj is Container container && container.GetCell(propertyName) is Cell cell && cell.IsBindable;
+            return obj is Container container && container.GetCellByKeyStr(keyStr) is Cell cell && cell.IsBindable;
         }
 
         public IPropertyAccessor? Start(WeakReference<object?> reference, string propertyName)
@@ -17,7 +17,7 @@ namespace NP.Synergy
 
             Container sadeh = (Container)target!;
 
-            return sadeh.GetCellByKeyStr(propertyName) as BindableCell;
+            return sadeh.GetCellByKeyStr(propertyName) as AvaloniaBindableCell;
         }
     }
 
@@ -25,7 +25,7 @@ namespace NP.Synergy
     {
         public static AppBuilder InsertSynergyPropertyAccessorPluginHelper(this AppBuilder appBuilder)
         {
-            ExpressionObserver.PropertyAccessors.Insert(0, new SynergyComposerPropertyAccessorPlugin());
+            ExpressionObserver.PropertyAccessors.Insert(0, new SynergyAvaloniaContainerPropertyAccessorPlugin());
 
             return appBuilder;
         }

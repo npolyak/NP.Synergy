@@ -3,7 +3,6 @@
     public enum ObjectIds
     {
         SelectablePeopleCollection,
-
         SelectedPerson
     }
 }
