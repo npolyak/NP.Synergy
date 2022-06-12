@@ -8,10 +8,18 @@ namespace TestSingleSelection
     {
         public string FirstName { get; }
         public string LastName { get; }
-        public SelectablePerson(string firstName, string lastName)
+
+        public int Born { get; }
+
+        public int Died { get; }
+
+        public SelectablePerson(string firstName, string lastName, int born, int died)
         {
             FirstName = firstName;
             LastName = lastName;
+
+            Born = born;
+            Died = died;
         }
 
         private bool _selected;

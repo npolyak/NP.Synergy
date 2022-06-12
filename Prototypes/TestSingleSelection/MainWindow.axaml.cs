@@ -22,7 +22,7 @@ namespace TestSingleSelection
                 DataPointDirection.Source, 
                 true);
 
-            _container[ObjectIds.SelectablePeopleCollection] = new SelectablePeopleTestCollection();
+            _container[ObjectIds.SelectablePeopleCollection] = new SelectableWritersTestCollection();
             _container.SetCell
             (
                 ObjectIds.SelectedPerson, 
