@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>NP.Synergy</id>
+    <version>0.9.99</version>
+    <title>NP.Synergy</title>
+    <authors>Nick Polyak, Ph. D.</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/npolyak/NP.Synergy</projectUrl>
+    <description>Synergy Container allowing to connect multiple objects via data points</description>
+    <releaseNotes>Synergy Container allowing to connect multiple objects via data points and view the datapoints in Avalonia</releaseNotes>
+    <copyright>Nick Polyak 2022</copyright>
+    <summary>Synergy Container allowing to connect multiple objects via data points and view the datapoints in Avalonia</summary>
+    <tags>Synergy, container, Avalonia</tags>
+    <dependencies>
+        <dependency id="NP.Avalonia.Visuals" version="1.0.23"/>
+    </dependencies>
+  </metadata>
+</package>
