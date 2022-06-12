@@ -2,7 +2,7 @@
 {
     public enum ObjectIds
     {
-        SelectablePeopleCollection,
-        SelectedPerson
+        SelectableWritersCollection,
+        SelectedWriter
     }
 }

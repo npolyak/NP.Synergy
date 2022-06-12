@@ -17,15 +17,15 @@ namespace TestSingleSelection
 
             _container.SetCell
             (
-                ObjectIds.SelectablePeopleCollection, 
+                ObjectIds.SelectableWritersCollection, 
                 typeof(ObservableCollection<SelectablePerson>), 
                 DataPointDirection.Source, 
                 true);
 
-            _container[ObjectIds.SelectablePeopleCollection] = new SelectableWritersTestCollection();
+            _container[ObjectIds.SelectableWritersCollection] = new SelectableWritersTestCollection();
             _container.SetCell
             (
-                ObjectIds.SelectedPerson, 
+                ObjectIds.SelectedWriter, 
                 typeof(SelectablePerson), 
                 DataPointDirection.SourceAndTarget, 
                 true);
@@ -36,8 +36,8 @@ namespace TestSingleSelection
                     new SingleSelectionBehavior<SelectablePerson>(),
                     new Dictionary<string, object>
                     {
-                        { nameof(SingleSelectionBehavior<SelectablePerson>.TheCollection), ObjectIds.SelectablePeopleCollection },
-                        { nameof(SingleSelectionBehavior<SelectablePerson>.TheSelectedItem), ObjectIds.SelectedPerson }
+                        { nameof(SingleSelectionBehavior<SelectablePerson>.TheCollection), ObjectIds.SelectableWritersCollection },
+                        { nameof(SingleSelectionBehavior<SelectablePerson>.TheSelectedItem), ObjectIds.SelectedWriter }
                     }
                 );
 
