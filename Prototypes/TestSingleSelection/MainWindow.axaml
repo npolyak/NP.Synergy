@@ -13,7 +13,7 @@
 			<TextBlock Text="Writers:"
 					   Margin="-10,0,0,15"
 					   FontWeight="Bold"/>
-			<ItemsPresenter Items="{Binding Path=SelectablePeopleCollection}"
+			<ItemsPresenter Items="{Binding Path=SelectableWritersCollection}"
 							Margin="10,0,0,0">
 				<ItemsPresenter.ItemTemplate>
 					<DataTemplate>
@@ -39,7 +39,7 @@
 					HorizontalAlignment="Left"
 					VerticalAlignment="Top"
 					Margin="10,0"
-					DataContext="{Binding Path=SelectedPerson}">
+					DataContext="{Binding Path=SelectedWriter}">
 			<TextBlock Text="Selected Writer:"
 					   Margin="-10,0,0,15"
 					   FontWeight="Bold"/>
