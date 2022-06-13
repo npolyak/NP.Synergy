@@ -1,0 +1,133 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:np="https://np.com/visuals"
+		xmlns:local="clr-namespace:TestTransformAndFilteringWithSingleSelection"
+        x:Class="TestTransformAndFilteringWithSingleSelection.MainWindow"
+        Title="TestTransformAndFilteringWithSingleSelection"
+		Width="800"
+		Height="250">
+	<Grid x:Name="RootPanel" 
+		  Margin="10"
+		  ColumnDefinitions="*,*,*,*">
+		<StackPanel	Margin="10,0">
+			<TextBlock Text="Writers:"
+					   Margin="-10,0,0,15"
+					   FontWeight="Bold"/>
+			<ItemsPresenter Items="{Binding Path=WritersCollection}"
+							Margin="10,0,0,0">
+				<ItemsPresenter.ItemTemplate>
+					<DataTemplate>
+						<Grid Background="Transparent">
+							<StackPanel Orientation="Horizontal"
+										Margin="0,0,0,5">
+								<TextBlock Text="{Binding FirstName}"
+										   Margin="0,0,6,0"
+										   VerticalAlignment="Center"/>
+								<TextBlock Text="{Binding LastName}"
+										   VerticalAlignment="Center"/>
+							</StackPanel>
+						</Grid>
+					</DataTemplate>
+				</ItemsPresenter.ItemTemplate>
+			</ItemsPresenter>
+		</StackPanel>
+		<Grid RowDefinitions="*, *"
+			  Margin="10,0"
+			  Grid.Column="1">
+			<StackPanel>
+				<TextBlock Text="Filtered Writers:"
+						   Margin="-10,0,0,15"
+						   FontWeight="Bold"/>
+				<ItemsPresenter Items="{Binding Path=FilteredWritersCollection}"
+								Margin="10,0,0,0">
+					<ItemsPresenter.ItemTemplate>
+						<DataTemplate>
+							<Grid Background="Transparent">
+								<StackPanel Orientation="Horizontal"
+											Margin="0,0,0,5">
+									<TextBlock Text="{Binding FirstName}"
+											   Margin="0,0,6,0"
+											   VerticalAlignment="Center"/>
+									<TextBlock Text="{Binding LastName}"
+											   VerticalAlignment="Center"/>
+								</StackPanel>
+							</Grid>
+						</DataTemplate>
+					</ItemsPresenter.ItemTemplate>
+				</ItemsPresenter>
+			</StackPanel>
+			<StackPanel Grid.Row="1"
+						Margin="10"
+						HorizontalAlignment="Center">
+				<StackPanel Orientation="Horizontal"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							Margin="0,0,0,10">
+					<TextBlock Text="Born From Year: "
+							   VerticalAlignment="Center"/>
+					<TextBox Text="{Binding Path=BornFromYear, Mode=TwoWay}" 
+							 Width="70"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							Margin="0,0,0,10">
+					<TextBlock Text="Born To Year: "
+							   VerticalAlignment="Center"/>
+					<TextBox Text="{Binding Path=BornToYear, Mode=TwoWay}" 
+							 Width="70"/>
+				</StackPanel>
+			</StackPanel>
+		</Grid>
+		<StackPanel	Margin="10,0"
+					Grid.Column="2">
+			<TextBlock Text="Selectable Filtered Writers:"
+					   Margin="-10,0,0,15"
+					   FontWeight="Bold"/>
+			<ItemsPresenter Items="{Binding Path=SelectableFilteredWritersCollection}"
+							Margin="10,0,0,0">
+				<ItemsPresenter.ItemTemplate>
+					<DataTemplate>
+						<Grid Background="Transparent"
+							  np:CallAction.TheEvent="{x:Static InputElement.PointerPressedEvent}"
+							  np:CallAction.MethodName="Select">
+							<Grid Background="LightBlue"
+								  IsVisible="{Binding Path=IsSelected, Mode=OneWay}"/>
+							<StackPanel Orientation="Horizontal"
+										Margin="0,0,0,5"
+										DataContext="{Binding Person}">
+								<TextBlock Text="{Binding FirstName}"
+										   Margin="0,0,6,0"
+										   VerticalAlignment="Center"/>
+								<TextBlock Text="{Binding LastName}"
+										   VerticalAlignment="Center"/>
+							</StackPanel>
+						</Grid>
+					</DataTemplate>
+				</ItemsPresenter.ItemTemplate>
+			</ItemsPresenter>
+		</StackPanel>
+		
+		<StackPanel Grid.Column="3"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					Margin="10,0"
+					DataContext="{Binding Path=SelectedWriter}">
+			<TextBlock Text="Selected Writer:"
+					   Margin="-10,0,0,15"
+					   FontWeight="Bold"/>
+			<StackPanel Margin="10,0,0,0"
+						DataContext="{Binding Person}">
+				<StackPanel Orientation="Horizontal" 
+							Margin="0,0,0,5">
+					<TextBlock Text="{Binding FirstName}"
+							   Margin="0,0,6,0"/>
+					<TextBlock Text="{Binding LastName}"/>
+				</StackPanel>
+				<TextBlock Text="{Binding Born, StringFormat='Born: \{0\}'}"
+						   Margin="0,0,0,5"/>
+				<TextBlock Text="{Binding Died, StringFormat='Died: \{0\}'}"/>
+			</StackPanel>
+		</StackPanel>
+	</Grid>
+</Window>
