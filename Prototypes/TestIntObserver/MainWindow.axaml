@@ -1,0 +1,26 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:np="https://np.com/visuals"
+		xmlns:local="clr-namespace:TestIntObserver"
+        x:Class="TestIntObserver.MainWindow"
+        Title="TestIntObserver"
+		Width="400"
+		Height="250">
+	<StackPanel x:Name="RootPanel" 
+				Margin="10"
+				VerticalAlignment="Center"
+				HorizontalAlignment="Center">
+		<StackPanel Orientation="Horizontal"
+					Margin="0,0,0,15">
+			<TextBlock Text="String: "
+					   VerticalAlignment="Center"/>
+			<TextBox Text="{Binding Path=IntStr, Mode=TwoWay}"
+					 Width="100"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal">
+			<TextBlock Text="Int: "/>
+			<TextBlock Text="{Binding Path=Int, Mode=OneWay}"
+					   Width="100"/>
+		</StackPanel>
+	</StackPanel>
+</Window>
