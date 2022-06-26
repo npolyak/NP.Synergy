@@ -31,7 +31,7 @@ namespace TestSingleSelection
                 true);
 
             _container
-                .AddBehavior
+                .AddAction
                 (
                     new SingleSelectionBehavior<SelectablePerson>(),
                     new Dictionary<string, object>

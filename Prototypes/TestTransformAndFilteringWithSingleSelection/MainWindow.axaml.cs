@@ -62,7 +62,7 @@ namespace TestTransformAndFilteringWithSingleSelection
                 DataPointDirection.Target,
                 true);
 
-            _container.AddBehavior
+            _container.AddAction
             (
                 new FilterPersonCollectionByBornDateBehavior(),
                 new Dictionary<string, object>
@@ -74,7 +74,7 @@ namespace TestTransformAndFilteringWithSingleSelection
                 }
             );
 
-            _container.AddBehavior
+            _container.AddAction
             (
                 new PersonCollectionToSelectablePersonCollectionBehavior(),
                 new Dictionary<string, object>
@@ -84,7 +84,7 @@ namespace TestTransformAndFilteringWithSingleSelection
                 }
             );
 
-            _container.AddBehavior
+            _container.AddAction
             (
                 new SingleSelectionBehavior<SelectablePerson>(),
                 new Dictionary<string, object>

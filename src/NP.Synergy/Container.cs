@@ -1,7 +1,7 @@
 ﻿using Avalonia.Data;
 using NP.Utilities;
 using NP.Utilities.Attributes;
-using System.Reflection;
+using System.Linq;
 
 namespace NP.Synergy
 {
@@ -11,9 +11,7 @@ namespace NP.Synergy
 
         private Dictionary<string, Cell> _bindableProps = new Dictionary<string, Cell>();
 
-        private List<SynergyBehavior> _behaviors = new List<SynergyBehavior>();
-
-        private void CellExistsError(string key) 
+        private void CellExistsError(string key)
         {
             throw new InvalidOperationException($"Programming Error: Cell with a key '{key}' since such cell does not exist.");
         }
@@ -70,8 +68,8 @@ namespace NP.Synergy
 
         public object? this[object key]
         {
-            get 
-            { 
+            get
+            {
                 return GetValue(key);
             }
 
@@ -87,7 +85,7 @@ namespace NP.Synergy
             {
                 return new Cell(key, cellType, direction);
             }
-            
+
             return new AvaloniaBindableCell(key, cellType, direction);
         }
 
@@ -116,20 +114,52 @@ namespace NP.Synergy
             return _props.ContainsKey(keyStr);
         }
 
-        public void AddBehavior(object behavior, IEnumerable<KeyValuePair<string, object>> propMap)
+        private void ImplantActionObjectIntoContainer
+        (
+            ISynergyActionObj synergyActionObj,
+            IEnumerable<KeyValuePair<string?, object>> propMap)
         {
-            SynergyBehavior synergyBehavior = 
-                new SynergyBehavior(behavior);
-
-            foreach((string propName, object cellKey) in propMap)
+            // we implant an action object into a Synergy container
+            // by connecting its endpoints (properties marked with DataPointAttribute)
+            // with the container cells
+            foreach ((string? propName, object cellKey) in propMap)
             {
                 Cell cell = GetCell(cellKey);
                 cell.ThrowIfNull($"cell for cell key '{cellKey}' is not found");
 
-                cell.AddBehavior(synergyBehavior, propName);
+                synergyActionObj.ConnectWithCell(cell, propName!);
+            }
+        }
+
+        public void AddStaticMethodAction
+        (
+            Type type,
+            string actionName, 
+            IEnumerable<KeyValuePair<string?, object>> inputParamsMap, 
+            object? returnParamKey = null)
+        {
+            SynergyStaticMethodActionObj synergyActionObj =
+                new SynergyStaticMethodActionObj(type, actionName);
+
+            if (returnParamKey != null)
+            {
+                inputParamsMap = 
+                    inputParamsMap.Union
+                    (
+                        new KeyValuePair<string?, object>[]
+                        {
+                            new KeyValuePair<string?, object>(null, returnParamKey) });
             }
 
-            this._behaviors.Add(synergyBehavior);
+            ImplantActionObjectIntoContainer(synergyActionObj, inputParamsMap);
+        }
+
+        public void AddAction(object actionObj, IEnumerable<KeyValuePair<string, object>> propMap)
+        {
+            SynergyActionsObj synergyActionObj = 
+                new SynergyActionsObj(actionObj);
+
+            ImplantActionObjectIntoContainer(synergyActionObj, propMap!);
         }
     }
 }

@@ -9,13 +9,20 @@ namespace NP.Synergy
 
         public virtual bool IsBindable => false;
 
-        public object? Key { get; }
+        public object Key { get; }
 
         public Type? PropertyType { get; init; }
 
-        internal List<BehaviorPropSetter> SourceSetters { get; } = new List<BehaviorPropSetter>();
+        // fire when the cell value changes. set the sources of the actions
+        // that start at the cell
+        internal List<ActionObjPropSetter> ActionSourcesFromCellValueSetters { get; } = 
+            new List<ActionObjPropSetter>();
 
-        internal List<BehaviorPropGetter> TargetGetters { get; } = new List<BehaviorPropGetter>();
+        // each one of the target getters set the Value
+        // of the cell with the result of the action
+        // actions ending at the cell after they fire. 
+        internal List<ActionObjPropGetter> TargetActionsValueGetters { get; } = 
+            new List<ActionObjPropGetter>();
 
         object? _value;
         public object? Value 
@@ -28,10 +35,15 @@ namespace NP.Synergy
 
                 _value = value;
 
-                SetBehaviors();
+                FireAllSetActions();
 
                 OnValueSet();
             }
+        }
+
+        internal void SetVal(object? value)
+        {
+            Value = value; 
         }
 
         protected virtual void OnValueSet()
@@ -53,54 +65,9 @@ namespace NP.Synergy
             return true;
         }
 
-        internal void AddBehavior(SynergyBehavior behavior, string propName)
+        protected void FireAllSetActions()
         {
-            string behaviorTypeStr = behavior.BehaviorType.Sq();
-
-            if (!behavior.HasProp(propName))
-            {
-                $"PropertyInfo for property {propName.Sq()} is not found for synergy container behavior object of type {behaviorTypeStr}".ThrowProgError();
-            }
-
-            if (Direction == DataPointDirection.Source)
-            {
-                behavior.HasSetter(propName)
-                    .ThrowIfFalse($"Property {propName.Sq()} on synergy container behavior object of type {behaviorTypeStr} is not a source as required for the cell {Key}");
-            }
-
-            if (Direction == DataPointDirection.Target)
-            {
-                behavior.HasGetter(propName)
-                    .ThrowIfFalse($"Property {propName.Sq()} on synergy container behavior object of type {behaviorTypeStr} is not a target as required for the cell {Key}");
-            }
-
-            var sourceSetter = behavior.GetSetter(propName);  
-            if (sourceSetter != null)
-            {
-                sourceSetter.Set(Value);
-                SourceSetters.Add(sourceSetter);
-            }
-
-            var targetGetter = behavior.GetGetter(propName);
-            if (targetGetter != null)
-            {
-                object? val = targetGetter.Get();
-                Value = val;
-
-                targetGetter.ValueChangedEvent += TargetGetter_ValueChangedEvent;
-
-                TargetGetters.Add(targetGetter);
-            }
-        }
-
-        private void TargetGetter_ValueChangedEvent(object? val)
-        {
-            Value = val;
-        }
-
-        protected void SetBehaviors()
-        {
-            SourceSetters.DoForEach(source => source.Set(Value));
+            ActionSourcesFromCellValueSetters.DoForEach(source => source.Set(Value));
         }
     }
 }
