@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using NP.Synergy;
+using NP.Utilities;
 using System.Collections.Generic;
 using System.Dynamic;
 
@@ -23,9 +24,9 @@ namespace TestDynamicProps
 
         public MainWindow()
         {
-            _composer.SetCell(Cell1Name, typeof(string), true);
+            _composer.SetCell(Cell1Name, typeof(string), DataPointDirection.Source, true);
 
-            _composer.SetCell(Cell2Name, typeof(string), true);
+            _composer.SetCell(Cell2Name, typeof(string), DataPointDirection.Source, true);
 
             ToggleText();
             ToggleText2();
