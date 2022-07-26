@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NP.Utilities", "..\..\SubMo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{AEC970F6-F3D5-4409-AC96-57642A44A28A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NP.Synergy", "..\..\src\NP.Synergy\NP.Synergy.csproj", "{2FBDB7D6-8073-423E-BE84-911012DB707B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NP.Synergy", "..\..\src\NP.Synergy.csproj", "{2FBDB7D6-8073-423E-BE84-911012DB707B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NP.Avalonia.Visuals", "..\..\SubModules\NP.Avalonia.Visuals\src\NP.Avalonia.Visuals.csproj", "{DCB44B92-9523-4896-AA91-EB9039D97437}"
 EndProject
