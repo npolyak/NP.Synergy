@@ -1,11 +1,10 @@
 ﻿using Avalonia.Data;
 using NP.Utilities;
-using NP.Utilities.Attributes;
-using System.Linq;
+
 
 namespace NP.Synergy
 {
-    public class Container
+    public class SynergyAssembly
     {
         private Dictionary<object, Cell> _props = new Dictionary<object, Cell>();
 
@@ -114,14 +113,14 @@ namespace NP.Synergy
             return _props.ContainsKey(keyStr);
         }
 
-        private void ImplantActionObjectIntoContainer
+        private void ImplantActionObjectIntoAssembly
         (
             ISynergyActionObj synergyActionObj,
             IEnumerable<KeyValuePair<string?, object>> propMap)
         {
-            // we implant an action object into a Synergy container
+            // we implant an action object into a Synergy assembly
             // by connecting its endpoints (properties marked with DataPointAttribute)
-            // with the container cells
+            // with the assembly cells
             foreach ((string? propName, object cellKey) in propMap)
             {
                 Cell cell = GetCell(cellKey);
@@ -151,7 +150,7 @@ namespace NP.Synergy
                             new KeyValuePair<string?, object>(null, returnParamKey) });
             }
 
-            ImplantActionObjectIntoContainer(synergyActionObj, inputParamsMap);
+            ImplantActionObjectIntoAssembly(synergyActionObj, inputParamsMap);
         }
 
         public void AddAction(object actionObj, IEnumerable<KeyValuePair<string, object>> propMap)
@@ -159,7 +158,7 @@ namespace NP.Synergy
             SynergyActionsObj synergyActionObj = 
                 new SynergyActionsObj(actionObj);
 
-            ImplantActionObjectIntoContainer(synergyActionObj, propMap!);
+            ImplantActionObjectIntoAssembly(synergyActionObj, propMap!);
         }
     }
 }

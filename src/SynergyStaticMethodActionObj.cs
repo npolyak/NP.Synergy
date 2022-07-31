@@ -8,7 +8,7 @@ namespace NP.Synergy
     {
         private MethodInfo ActionMethodInfo { get; }
 
-        public Type MethodContainerType => ActionMethodInfo.DeclaringType!;
+        public Type MethodContainingType => ActionMethodInfo.DeclaringType!;
 
         internal SynergyStaticMethodActionObj(Type methodContainingClassType, string actionName)
         {
@@ -21,7 +21,7 @@ namespace NP.Synergy
             
         }
 
-        /// connects the property propName of the action object to the container cell
+        /// connects the property propName of the action object to the synergy assembly cell
         void ISynergyActionObj.ConnectWithCell(Cell cell, string? actionObjDataPointName)
         {
             ParameterInfo paramInfo = 

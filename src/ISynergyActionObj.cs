@@ -2,7 +2,7 @@
 {
     internal interface ISynergyActionObj
     {
-        /// connects the property propName of the action object to the container cell
+        /// connects the property propName of the action object to the synergy assembly cell
         internal void ConnectWithCell(Cell cell, string actionObjDataPointName);
     }
 }

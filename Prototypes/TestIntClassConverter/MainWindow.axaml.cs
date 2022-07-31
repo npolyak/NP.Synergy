@@ -7,16 +7,16 @@ namespace TestIntClassConverter
 {
     public partial class MainWindow : Window
     {
-        private Container _container = new Container();
+        private SynergyAssembly _assembly = new SynergyAssembly();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            _container.SetCell(ObjectIds.IntStr, typeof(string), DataPointDirection.Source, true);
-            _container.SetCell(ObjectIds.Int, typeof(int), DataPointDirection.Target, true);
+            _assembly.SetCell(ObjectIds.IntStr, typeof(string), DataPointDirection.Source, true);
+            _assembly.SetCell(ObjectIds.Int, typeof(int), DataPointDirection.Target, true);
 
-            _container.AddAction
+            _assembly.AddAction
             (
                 new StrToIntConverter(),
                 new Dictionary<string, object>
@@ -26,7 +26,7 @@ namespace TestIntClassConverter
                 }
             );
 
-            RootPanel.DataContext = _container;
+            RootPanel.DataContext = _assembly;
         }
     }
 }

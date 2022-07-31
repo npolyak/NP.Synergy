@@ -145,7 +145,7 @@ namespace NP.Synergy
             return TargetGetters.ContainsKey(propName);
         }
 
-        // connects the property propName of the action object to the container cell
+        // connects the property propName of the action object to the synergy assembly cell
         void ISynergyActionObj.ConnectWithCell
         (
             Cell cell, 
@@ -156,19 +156,19 @@ namespace NP.Synergy
 
             if (!HasProp(actionObjDataPointName))
             {
-                $"PropertyInfo for property {actionObjDataPointName.Sq()} is not found for synergy container behavior object of type {behaviorTypeStr}".ThrowProgError();
+                $"PropertyInfo for property {actionObjDataPointName.Sq()} is not found for synergy assembly behavior object of type {behaviorTypeStr}".ThrowProgError();
             }
 
             if (cell.Direction == DataPointDirection.Source)
             {
                 HasSetter(actionObjDataPointName)
-                    .ThrowIfFalse($"Property {actionObjDataPointName.Sq()} on synergy container behavior object of type {behaviorTypeStr} is not a source as required for the cell {key.Sq()}");
+                    .ThrowIfFalse($"Property {actionObjDataPointName.Sq()} on synergy assembly behavior object of type {behaviorTypeStr} is not a source as required for the cell {key.Sq()}");
             }
 
             if (cell.Direction == DataPointDirection.Target)
             {
                 HasGetter(actionObjDataPointName)
-                    .ThrowIfFalse($"Property {actionObjDataPointName.Sq()} on synergy container behavior object of type {behaviorTypeStr} is not a target as required for the cell {key.Sq()}");
+                    .ThrowIfFalse($"Property {actionObjDataPointName.Sq()} on synergy assembly behavior object of type {behaviorTypeStr} is not a target as required for the cell {key.Sq()}");
             }
 
             var sourceSetter = GetActionSourceSetter(actionObjDataPointName);
