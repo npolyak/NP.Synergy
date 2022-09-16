@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace NP.Synergy
 {
-    internal class ActionObjPropGetter
+    internal class ActionObjPropGetter : IValueGetter
     {
         private readonly object _actionObj;
 
@@ -15,7 +15,7 @@ namespace NP.Synergy
 
         public string? ChangedByActionName { get; }
 
-        internal void FireValueChanged()
+        void IValueGetter.FireValueChanged()
         {
             ValueChangedEvent?.Invoke(Get());
         }
@@ -43,7 +43,7 @@ namespace NP.Synergy
         private void Notifiable_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == PropName)
-                FireValueChanged();
+                ((IValueGetter)this).FireValueChanged();
         }
 
         public object? Get()

@@ -15,8 +15,8 @@ namespace NP.Synergy
 
         // fire when the cell value changes. set the sources of the actions
         // that start at the cell
-        internal List<ActionObjPropSetter> ActionSourcesFromCellValueSetters { get; } = 
-            new List<ActionObjPropSetter>();
+        internal List<IValueSetter> ActionSourcesFromCellValueSetters { get; } = 
+            new List<IValueSetter>();
 
         // each one of the target getters set the Value
         // of the cell with the result of the action

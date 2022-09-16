@@ -21,14 +21,14 @@ namespace NP.Synergy
         // dictionary that maps property names into the corresponding
         // Actions that set the property value for this action object
         // that contains the property
-        private Dictionary<string, ActionObjPropSetter> SourceSetters { get; } =
-            new Dictionary<string, ActionObjPropSetter>();
+        private Dictionary<string, IValueSetter> SourceSetters { get; } =
+            new Dictionary<string, IValueSetter>();
 
         // dictionary that maps property names into the corresponding
         // Funcs that return the property value for this action object
         // that contains this property
-        private Dictionary<string, ActionObjPropGetter> TargetGetters { get; } =
-            new Dictionary<string, ActionObjPropGetter>();
+        private Dictionary<string, IValueGetter> TargetGetters { get; } =
+            new Dictionary<string, IValueGetter>();
 
         private void SetSourceSetter
         (
@@ -113,7 +113,7 @@ namespace NP.Synergy
         }
 
 
-        private ActionObjPropSetter? GetActionSourceSetter(string propName)
+        private IValueSetter? GetActionSourceSetter(string propName)
         {
             if (!SourceSetters.TryGetValue(propName, out var setter))
                 return null;
@@ -121,7 +121,7 @@ namespace NP.Synergy
             return setter;
         }
 
-        private ActionObjPropGetter? GetActionTargetGetter(string propName)
+        private IValueGetter? GetActionTargetGetter(string propName)
         {
             if (!TargetGetters.TryGetValue(propName, out var getter))
                 return null;
@@ -159,26 +159,26 @@ namespace NP.Synergy
                 $"PropertyInfo for property {actionObjDataPointName.Sq()} is not found for synergy assembly behavior object of type {behaviorTypeStr}".ThrowProgError();
             }
 
-            if (cell.Direction == DataPointDirection.Source)
+            if (cell.Direction.IsSource())
             {
                 HasSetter(actionObjDataPointName)
                     .ThrowIfFalse($"Property {actionObjDataPointName.Sq()} on synergy assembly behavior object of type {behaviorTypeStr} is not a source as required for the cell {key.Sq()}");
             }
 
-            if (cell.Direction == DataPointDirection.Target)
+            if (cell.Direction.IsTarget())
             {
                 HasGetter(actionObjDataPointName)
                     .ThrowIfFalse($"Property {actionObjDataPointName.Sq()} on synergy assembly behavior object of type {behaviorTypeStr} is not a target as required for the cell {key.Sq()}");
             }
 
-            var sourceSetter = GetActionSourceSetter(actionObjDataPointName);
+            IValueSetter? sourceSetter = GetActionSourceSetter(actionObjDataPointName);
             if (sourceSetter != null)
             {
                 sourceSetter.Set(cell.Value);
                 cell.ActionSourcesFromCellValueSetters.Add(sourceSetter);
             }
 
-            var targetGetter = GetActionTargetGetter(actionObjDataPointName);
+            IValueGetter? targetGetter = GetActionTargetGetter(actionObjDataPointName);
             if (targetGetter != null)
             {
                 object? val = targetGetter.Get();
@@ -186,7 +186,7 @@ namespace NP.Synergy
 
                 targetGetter.ValueChangedEvent += cell.SetVal;
 
-                cell.TargetActionsValueGetters.Add(targetGetter);
+                cell.TargetActionsValueGetters.Add((ActionObjPropGetter) targetGetter);
             }
         }
     }

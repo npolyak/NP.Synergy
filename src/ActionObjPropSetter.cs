@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace NP.Synergy
 {
-    internal class ActionObjPropSetter
+    internal class ActionObjPropSetter : IValueSetter
     {
         private readonly object _actionObj;
 
@@ -17,7 +17,7 @@ namespace NP.Synergy
 
         public string PropName { get; }    
 
-        public string? TriggersActionName { get; }
+        internal string? TriggersActionName { get; }
 
         internal ActionObjPropSetter(object actionObj, string propName, string? triggersActionName)
         {
@@ -42,7 +42,7 @@ namespace NP.Synergy
             }
         }
 
-        internal void Set(object? value)
+        public void Set(object? value)
         {
             _setter.Invoke(_actionObj, value);
 

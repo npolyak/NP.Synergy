@@ -7,16 +7,16 @@ namespace TestIntMethodConverter
 {
     public partial class MainWindow : Window
     {
-        private Container _container = new Container();
+        private SynergyAssembly _synergyAssembly = new SynergyAssembly();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            _container.SetCell(ObjectIds.IntStr, typeof(string), DataPointDirection.Source, true);
-            _container.SetCell(ObjectIds.Int, typeof(int), DataPointDirection.Target, true);
+            _synergyAssembly.SetCell(ObjectIds.IntStr, typeof(string), DataPointDirection.Source, true);
+            _synergyAssembly.SetCell(ObjectIds.Int, typeof(int), DataPointDirection.Target, true);
 
-            _container.AddStaticMethodAction
+            _synergyAssembly.AddStaticMethodAction
             (
                 typeof(IntConverterUtils),
                 nameof(IntConverterUtils.StrToInt),
@@ -27,7 +27,7 @@ namespace TestIntMethodConverter
                 ObjectIds.Int
             );
 
-            RootPanel.DataContext = _container;
+            RootPanel.DataContext = _synergyAssembly;
         }
     }
 }

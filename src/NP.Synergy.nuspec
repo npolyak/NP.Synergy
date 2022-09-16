@@ -14,7 +14,7 @@
     <summary>Synergy Container allowing to connect multiple objects via data points and view the datapoints in Avalonia</summary>
     <tags>Synergy, container, Avalonia</tags>
     <dependencies>
-        <dependency id="NP.Avalonia.Visuals" version="1.0.23"/>
+        <dependency id="NP.Avalonia.Visuals" version="1.0.30"/>
     </dependencies>
   </metadata>
 </package>

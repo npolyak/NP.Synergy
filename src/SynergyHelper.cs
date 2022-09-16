@@ -13,7 +13,8 @@ namespace NP.Utilities.Attributes
         {
             MethodInfo methodInfo =
                        objType.GetMethods()
-                              .Single(m => m.GetAttr<ActionAttribute>()?.Name == actionName);
+                              .Single(m => (m.GetAttr<ActionAttribute>()?.Name == actionName) || 
+                                           (m.GetAttr<ActionAttribute>()?.Name == null && m.Name == actionName) );
 
             return methodInfo;
         }
